@@ -8,54 +8,66 @@ package p1;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DataAccessor {
-    public static void main(String[] args) {
-        // ArrayList for students
-        ArrayList<Student> students = new ArrayList<>();
-        // Strings to connect to database
-        String url = "//phpmyadmin.cdgwdgkn5fuv.us-west-2.rds.amazonaws.com";
-        String db_name = "db_mayra";
-        String user = "db_mayra";
-        String password = "mm7277";
-        String connect = "jdbc:mysql:" + url + ":3306/" + db_name;
 
-        Connection connection = null;
+    private Connection connection = null;
+    // ArrayList for students
+    // Strings to connect to database
+    private String url = "//phpmyadmin.cdgwdgkn5fuv.us-west-2.rds.amazonaws.com";
+    private String db_name = "db_mayra";
+    private String user = "db_mayra";
+    private String password = "mm7277";
+    private String connect = "jdbc:mysql:" + url + ":3306/" + db_name;
+
+
+    public DataAccessor() throws DriverError, SQLError, ClassNotFoundException, SQLException, ConnectionError {
         // Load the mysql driver
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            System.out.println("Driver Loaded");
-        } catch (ClassNotFoundException e) {
-            //e.printStackTrace();
-            System.out.println("Driver not loaded");
-        }
+        Class.forName("com.mysql.jdbc.Driver");
+        System.out.println("Driver Loaded");
 
         // Connect to the database
-        try {
-            connection = DriverManager.getConnection(connect, user, password);
-            System.out.println("Connection Successful");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Connection not successful");
-        }
+        connection = DriverManager.getConnection(connect, user, password);
+        System.out.println("Connection Successful");
+
+
+
+    }
+
+    public ArrayList<Student> studentsList() throws SQLException {
         // Get information from the database
-        try (Statement s = connection.createStatement()){
-            ResultSet rs = s.executeQuery("SELECT * FROM Student ");
+        Statement s = connection.createStatement();
 
-            // Display the record set
-            while (rs.next()) {
-                Student student = new Student();
-                System.out.println("Student ID: " + student.getStudentID(rs.getInt("Student ID")) + "\t" +
-                        "\tFirst Name: " + student.getFirstName(rs.getString("First Name")) + "\t" +
-                        "\tLast Name: " + student.getLastName(rs.getString("Last Name")));
-                students.add(student);
+        ResultSet rs = s.executeQuery("SELECT * FROM Student ");
 
-                /*System.out.println("Student ID: " + rs.getString(1) + "\t" + "\tFirst Name: " + rs.getString(2) + "\t" +
-                        " \tLast Name: " + rs.getString(3));*/
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("SQL Error");
+        // Display the record set
+        ArrayList<Student> students = new ArrayList<>();
+        while (rs.next()) {
+            Student student = new Student();
+            System.out.println("Student ID: " + student.getStudentID(rs.getInt("Student ID")) + "\t" +
+                    "\tFirst Name: " + student.getFirstName(rs.getString("First Name")) + "\t" +
+                    "\tLast Name: " + student.getLastName(rs.getString("Last Name")));
+            students.add(student);
         }
+        return students;
+    }
+}
+
+class DriverError extends Exception {
+    public DriverError() {
+        super("Driver not loaded");
+    }
+}
+
+class ConnectionError extends Exception {
+    public ConnectionError() {
+        super("Connection not successful");
+    }
+}
+
+class SQLError extends Exception {
+    public SQLError() {
+        super("SQL Error");
     }
 }
