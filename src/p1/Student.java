@@ -13,28 +13,43 @@ public class Student {
     private String major;
     private String department;
 
-    public int getStudentID(int ID) {
+    public  int setStudentID(int ID) {
         studentID = ID;
         return studentID;
     }
+    public int getStudentID() {
+        return studentID;
+    }
 
-    public String getFirstName(String FirstName) {
+    public String setFirstName(String FirstName){
         firstName = FirstName;
         return firstName;
     }
+    public String getFirstName() {
+        return firstName;
+    }
 
-    public String getLastName(String LastName) {
+    public String setLastName(String LastName){
         lastName = LastName;
         return lastName;
     }
+    public String getLastName() {
+        return lastName;
+    }
 
-    public String getMajor(String Major) {
+    public String setMajor(String Major){
         major = Major;
         return major;
     }
+    public String getMajor() {
+        return major;
+    }
 
-    public String getDepartment(String dtp) {
-        department = dtp;
+    public String setDpt(String Dept){
+        department = Dept;
+        return department;
+    }
+    public String getDepartment() {
         return department;
     }
 }

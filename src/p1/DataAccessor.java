@@ -30,12 +30,9 @@ public class DataAccessor {
         // Connect to the database
         connection = DriverManager.getConnection(connect, user, password);
         System.out.println("Connection Successful");
-
-
-
     }
 
-    public ArrayList<Student> studentsList() throws SQLException {
+    public ArrayList<Student> getStudentsList() throws SQLException {
         // Get information from the database
         Statement s = connection.createStatement();
 
@@ -45,9 +42,11 @@ public class DataAccessor {
         ArrayList<Student> students = new ArrayList<>();
         while (rs.next()) {
             Student student = new Student();
-            System.out.println("Student ID: " + student.getStudentID(rs.getInt("Student ID")) + "\t" +
-                    "\tFirst Name: " + student.getFirstName(rs.getString("First Name")) + "\t" +
-                    "\tLast Name: " + student.getLastName(rs.getString("Last Name")));
+            student.setStudentID(rs.getInt("Student ID"));
+            student.setFirstName(rs.getString("First Name"));
+            student.setLastName(rs.getString("Last Name"));
+            student.setMajor(rs.getString("Major"));
+            student.setDpt(rs.getString("Department"));
             students.add(student);
         }
         return students;
