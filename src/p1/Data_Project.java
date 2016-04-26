@@ -89,11 +89,11 @@ public class Data_Project extends Application {
             String lName = each.getLastName();
             String major = each.getMajor();
             String dtp = each.getDepartment();
-            pane1.addRow(0, new Label("Student ID: " + id));
-            pane1.addRow(1, new Label("First Name: " + fName));
-            pane1.addRow(2, new Label("Last Name: " + lName));
-            pane1.addRow(3, new Label("Major: " + major));
-            pane1.addRow(4, new Label("Department: " + dtp));
+            pane1.addRow(0, new Label("Student ID: " + "\t" + id));
+            pane1.addRow(1, new Label("First Name: " + "\t" + fName));
+            pane1.addRow(2, new Label("Last Name: " + "\t" + lName));
+            pane1.addRow(3, new Label("Major: " + "\t" + "\t" + major));
+            pane1.addRow(4, new Label("Department: " + "\t" + dtp));
             pane1.addRow(5, buttons());
             Student.setContent(pane1);
         }
