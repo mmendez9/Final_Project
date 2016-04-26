@@ -32,6 +32,7 @@ public class DataAccessor {
         System.out.println("Connection Successful");
     }
 
+    // ArrayList for students records
     public ArrayList<Student> getStudentsList() throws SQLException {
         // Get information from the database
         Statement s = connection.createStatement();
@@ -50,6 +51,46 @@ public class DataAccessor {
             students.add(student);
         }
         return students;
+    }
+
+    // ArryList for Courses records
+    public ArrayList<Course> getCourseList() throws SQLException {
+        // Get information from the database
+        Statement s = connection.createStatement();
+
+        ResultSet rs = s.executeQuery("SELECT * FROM Course ");
+
+        // Display the record set
+        ArrayList<Course> courses = new ArrayList<>();
+        while (rs.next()) {
+            Course course = new Course();
+            course.setCRN(rs.getInt("CRN"));
+            course.setTitle(rs.getString("Title"));
+            course.setNum(rs.getInt("Number"));
+            course.setMajor(rs.getString("Major"));
+            course.setDept(rs.getString("Department"));
+            course.setCredits(rs.getInt("Credits"));
+            courses.add(course);
+        }
+        return courses;
+    }
+
+    // ArrayList for Enrolment records
+    public ArrayList<Enrollment> getEnrollmentList() throws SQLException {
+        // Get information from the database
+        Statement s = connection.createStatement();
+
+        ResultSet rs = s.executeQuery("SELECT * FROM Enrollment ");
+
+        // Display the records set
+        ArrayList<Enrollment> enrollments = new ArrayList<>();
+        while (rs.next()) {
+            Enrollment enrollment = new Enrollment();
+            enrollment.setStudentID(rs.getInt("Student ID"));
+            enrollment.setCRN(rs.getInt("CRN"));
+            enrollments.add(enrollment);
+        }
+        return enrollments;
     }
 }
 

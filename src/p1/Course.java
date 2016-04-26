@@ -12,29 +12,53 @@ public class Course  {
     private String major;
     private int number;
     private String department;
+    private int credits;
 
-    public int getCRN(int crn) {
+    public int setCRN(int crn){
         CRN = crn;
         return CRN;
     }
+    public int getCRN() {
+        return CRN;
+    }
 
-    public String getTitle(String name){
-        title = name;
+    public String setTitle(String titl){
+        title = titl;
+        return title;
+    }
+    public String getTitle(){
         return title;
     }
 
-    public String getMajor(String Major){
-        major = Major;
+    public String setMajor(String mj){
+        major = mj;
+        return major;
+    }
+    public String getMajor(){
         return major;
     }
 
-    public int getNumber(int no) {
+    public int setNum(int no){
         number = no;
         return number;
     }
+    public int getNumber() {
+        return number;
+    }
 
-    public String getDepartment(String dpt){
+    public String setDept(String dpt){
         department = dpt;
         return department;
+    }
+    public String getDepartment(){
+        return department;
+    }
+
+    public int setCredits(int crd){
+        credits = crd;
+        return credits;
+    }
+    public int getCredits(){
+        return credits;
     }
 }
