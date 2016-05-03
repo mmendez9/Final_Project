@@ -19,19 +19,46 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class Data_Project extends Application {
-    Button first = new Button("First");
-    Button back = new Button("Back");
-    Button next = new Button("Next");
-    Button last = new Button("Last");
 
-    public HBox buttons() {
+    public HBox studentBtns(EventHandler eventHandler) {
         HBox buts = new HBox(10);
+        Button first = new Button("First");
+        Button back = new Button("Back");
+        Button next = new Button("Next");
+        Button last = new Button("Last");
+        first.setOnAction(eventHandler);
+        back.setOnAction(eventHandler);
+        next.setOnAction(eventHandler);
+        last.setOnAction(eventHandler);
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
 
         return buts;
     }
 
+    public HBox courseBtns() {
+        HBox buts = new HBox(10);
+        Button first = new Button("First");
+        Button back = new Button("Back");
+        Button next = new Button("Next");
+        Button last = new Button("Last");
+        buts.setPadding(new Insets(10));
+        buts.getChildren().addAll(first, back, next, last);
+
+        return buts;
+    }
+
+    public HBox enrollmentBtns() {
+        HBox buts = new HBox(10);
+        Button first = new Button("First");
+        Button back = new Button("Back");
+        Button next = new Button("Next");
+        Button last = new Button("Last");
+        buts.setPadding(new Insets(10));
+        buts.getChildren().addAll(first, back, next, last);
+
+        return buts;
+    }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -50,15 +77,16 @@ public class Data_Project extends Application {
             if (b.getText() == "First") {
                 Student.setContent(panes.get(0));
             } else if (b.getText() == "Back"){
-                for(int j = 0; j < 5;) {
-                    Student.setContent(panes.get(j-1));
+                for(int j = 0; j < panes.size(); j++) {
+                    Student.setContent(panes.get(panes.hashCode()));
+                    j = 0;
                 }
             }else if (b.getText() == "Next") {
-                for(int j = 0; j < 5;) {
+                for(int j = 1; j < panes.size(); j++) {
                     Student.setContent(panes.get(j+1));
                 }
             }else if (b.getText() == "Last") {
-                Student.setContent(panes.get(5));
+                Student.setContent(panes.get(panes.indexOf(panes)));
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
@@ -73,13 +101,9 @@ public class Data_Project extends Application {
             pane.addRow(2, new Label("Last Name: " + "\t" + each.getLastName()));
             pane.addRow(3, new Label("Major: " + "\t" + "\t" + each.getMajor()));
             pane.addRow(4, new Label("Department: " + "\t" + each.getDepartment()));
-            pane.addRow(5, buttons());
+            pane.addRow(5, studentBtns(Bts));
 
             Student.setContent(pane);
-                first.setOnAction(Bts);
-                back.setOnAction(Bts);
-                next.setOnAction(Bts);
-                last.setOnAction(Bts);
 
             panes.add(pane);
         }
@@ -99,7 +123,7 @@ public class Data_Project extends Application {
             pane2.addRow(2, new Label("Major: " + "\t" + "\t" + each.getMajor()));
             pane2.addRow(3, new Label("Number: " + "\t" + "\t" + each.getNumber()));
             pane2.addRow(4, new Label("Department: " + "\t" + each.getDepartment()));
-            pane2.addRow(5, buttons());
+            pane2.addRow(5, courseBtns());
 
             Course.setContent(pane2);
         }
@@ -115,7 +139,7 @@ public class Data_Project extends Application {
 
             pane3.addRow(0, new Label("Student ID: " + "\t" + each.getStudentID()));
             pane3.addRow(1, new Label("CRN: " + "\t" + "\t" + each.getCRN()));
-            pane3.addRow(15, buttons());
+            pane3.addRow(15, enrollmentBtns());
 
             Enrollment.setContent(pane3);
         }
@@ -124,7 +148,7 @@ public class Data_Project extends Application {
         tabPane.getTabs().addAll(Student, Course, Enrollment);
 
 
-        Scene scene = new Scene(tabPane, 250, 200);
+        Scene scene = new Scene(tabPane, 300, 200);
         primaryStage.setTitle("Registration DTCC");
         primaryStage.setScene(scene);
         primaryStage.show();
