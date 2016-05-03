@@ -17,9 +17,12 @@ import javafx.stage.Stage;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Data_Project extends Application {
 
+    // Buttons for student tab
     public HBox studentBtns(EventHandler eventHandler) {
         HBox buts = new HBox(10);
         Button first = new Button("First");
@@ -36,6 +39,7 @@ public class Data_Project extends Application {
         return buts;
     }
 
+    // Buttons for the course tab
     public HBox courseBtns() {
         HBox buts = new HBox(10);
         Button first = new Button("First");
@@ -48,6 +52,7 @@ public class Data_Project extends Application {
         return buts;
     }
 
+    // Buttons for the enrollment tab
     public HBox enrollmentBtns() {
         HBox buts = new HBox(10);
         Button first = new Button("First");
@@ -74,19 +79,18 @@ public class Data_Project extends Application {
         ArrayList<Pane> panes = new ArrayList<>();
         EventHandler<ActionEvent> Bts = e -> {
             Button b = (Button) e.getSource();
-            if (b.getText() == "First") {
+            if (b.getText().equals("First")) {
                 Student.setContent(panes.get(0));
-            } else if (b.getText() == "Back"){
-                for(int j = 0; j < panes.size(); j++) {
-                    Student.setContent(panes.get(panes.hashCode()));
-                    j = 0;
+            } else if (b.getText().equals("Back")){
+                for(int j = panes.size(); j >= 0; j--) {
+                    Student.setContent(panes.get(j));
                 }
-            }else if (b.getText() == "Next") {
-                for(int j = 1; j < panes.size(); j++) {
+            }else if (b.getText().equals("Next")) {
+                for(int j = 0; j <= panes.size(); j++) {
                     Student.setContent(panes.get(j+1));
                 }
-            }else if (b.getText() == "Last") {
-                Student.setContent(panes.get(panes.indexOf(panes)));
+            }else if (b.getText().equals("Last")) {
+                Student.setContent(panes.get(panes.lastIndexOf(panes)));
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
