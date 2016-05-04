@@ -40,12 +40,16 @@ public class Data_Project extends Application {
     }
 
     // Buttons for the course tab
-    public HBox courseBtns() {
+    public HBox courseBtns(EventHandler eventHandler) {
         HBox buts = new HBox(10);
         Button first = new Button("First");
         Button back = new Button("Back");
         Button next = new Button("Next");
         Button last = new Button("Last");
+        first.setOnAction(eventHandler);
+        back.setOnAction(eventHandler);
+        next.setOnAction(eventHandler);
+        last.setOnAction(eventHandler);
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
 
@@ -53,12 +57,17 @@ public class Data_Project extends Application {
     }
 
     // Buttons for the enrollment tab
-    public HBox enrollmentBtns() {
+    public HBox enrollmentBtns(EventHandler eventHandler) {
         HBox buts = new HBox(10);
         Button first = new Button("First");
         Button back = new Button("Back");
         Button next = new Button("Next");
         Button last = new Button("Last");
+        first.setOnAction(eventHandler);
+        back.setOnAction(eventHandler);
+        next.setOnAction(eventHandler);
+        last.setOnAction(eventHandler);
+        buts.setPadding(new Insets(10));
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
 
@@ -82,15 +91,14 @@ public class Data_Project extends Application {
             if (b.getText().equals("First")) {
                 Student.setContent(panes.get(0));
             } else if (b.getText().equals("Back")){
-                for(int j = panes.size(); j >= 0; j--) {
-                    Student.setContent(panes.get(j));
+                for(int j = 0; j <= 4; j++) {
+                    Student.setContent(panes.get(j-1));
                 }
             }else if (b.getText().equals("Next")) {
-                for(int j = 0; j <= panes.size(); j++) {
-                    Student.setContent(panes.get(j+1));
-                }
+                    Student.setContent(panes.get(1));
+
             }else if (b.getText().equals("Last")) {
-                Student.setContent(panes.get(panes.lastIndexOf(panes)));
+                Student.setContent(panes.get(panes.size()-1));
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
@@ -107,14 +115,30 @@ public class Data_Project extends Application {
             pane.addRow(4, new Label("Department: " + "\t" + each.getDepartment()));
             pane.addRow(5, studentBtns(Bts));
 
-            Student.setContent(pane);
-
             panes.add(pane);
+
+            Student.setContent(pane);
         }
 
 
         // Tab for the course
         Tab Course = new Tab("Course");
+        ArrayList<Pane> panes2 = new ArrayList<>();
+        EventHandler<ActionEvent> Btc = e -> {
+            Button b = (Button) e.getSource();
+            if (b.getText().equals("First")) {
+                Course.setContent(panes2.get(0));
+            } else if (b.getText().equals("Back")){
+                for(int j = 0; j <= 4; j++) {
+                    Course.setContent(panes2.get(j-1));
+                }
+            }else if (b.getText().equals("Next")) {
+                Course.setContent(panes2.get(1));
+
+            }else if (b.getText().equals("Last")) {
+                Course.setContent(panes2.get(panes2.size()-1));
+            }
+        };
 
         for (Course each : dataAccessor.getCourseList()) {
             GridPane pane2 = new GridPane();
@@ -127,13 +151,30 @@ public class Data_Project extends Application {
             pane2.addRow(2, new Label("Major: " + "\t" + "\t" + each.getMajor()));
             pane2.addRow(3, new Label("Number: " + "\t" + "\t" + each.getNumber()));
             pane2.addRow(4, new Label("Department: " + "\t" + each.getDepartment()));
-            pane2.addRow(5, courseBtns());
+            pane2.addRow(5, courseBtns(Btc));
 
+            panes2.add(pane2);
             Course.setContent(pane2);
         }
 
         // Tab for the enrollment
         Tab Enrollment = new Tab("Enrollment");
+        ArrayList<Pane> panes3 = new ArrayList<>();
+        EventHandler<ActionEvent> Bte = e -> {
+            Button b = (Button) e.getSource();
+            if (b.getText().equals("First")) {
+                Enrollment.setContent(panes3.get(0));
+            } else if (b.getText().equals("Back")){
+                for(int j = 1; j <= panes3.size()-1; j++) {
+                    Enrollment.setContent(panes2.get(j-1));
+                }
+            }else if (b.getText().equals("Next")) {
+                Enrollment.setContent(panes3.get(1));
+
+            }else if (b.getText().equals("Last")) {
+                Enrollment.setContent(panes3.get(panes3.size()-2));
+            }
+        };
 
         for (Enrollment each : dataAccessor.getEnrollmentList()) {
             GridPane pane3 = new GridPane();
@@ -143,10 +184,13 @@ public class Data_Project extends Application {
 
             pane3.addRow(0, new Label("Student ID: " + "\t" + each.getStudentID()));
             pane3.addRow(1, new Label("CRN: " + "\t" + "\t" + each.getCRN()));
-            pane3.addRow(15, enrollmentBtns());
+            pane3.addRow(15, enrollmentBtns(Bte));
+
+            panes3.add(pane3);
 
             Enrollment.setContent(pane3);
         }
+        System.out.println(panes3.size());
 
         // Put all tabs together
         tabPane.getTabs().addAll(Student, Course, Enrollment);
