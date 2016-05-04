@@ -15,10 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 public class Data_Project extends Application {
 
@@ -88,17 +85,25 @@ public class Data_Project extends Application {
         ArrayList<Pane> panes = new ArrayList<>();
         EventHandler<ActionEvent> Bts = e -> {
             Button b = (Button) e.getSource();
-            if (b.getText().equals("First")) {
-                Student.setContent(panes.get(0));
-            } else if (b.getText().equals("Back")){
-                for(int j = 0; j <= 4; j++) {
-                    Student.setContent(panes.get(j-1));
-                }
-            }else if (b.getText().equals("Next")) {
-                    Student.setContent(panes.get(1));
+            for (int j = 0; j <= 4; j++) {
+                if (b.getText().equals("First")) {
+                    Student.setContent(panes.get(0));
+                } else if (b.getText().equals("Back")) {
+                    if (panes.get(j).equals(0)) {
+                        if (j != 0) {
+                            Student.setContent(panes.get(j));
+                        } else
+                            Student.setContent(panes.get(0));
+                    } else if (j != 0)
+                        Student.setContent(panes.get(j - 1));
 
-            }else if (b.getText().equals("Last")) {
-                Student.setContent(panes.get(panes.size()-1));
+                    System.out.println(j);
+                } else if (b.getText().equals("Next")) {
+                        Student.setContent(panes.get(j + 1));
+
+                } else if (b.getText().equals("Last")) {
+                    Student.setContent(panes.get(4));
+                }
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
@@ -117,7 +122,7 @@ public class Data_Project extends Application {
 
             panes.add(pane);
 
-            Student.setContent(pane);
+            Student.setContent(panes.get(0));
         }
 
 
@@ -128,15 +133,15 @@ public class Data_Project extends Application {
             Button b = (Button) e.getSource();
             if (b.getText().equals("First")) {
                 Course.setContent(panes2.get(0));
-            } else if (b.getText().equals("Back")){
-                for(int j = 0; j <= 4; j++) {
-                    Course.setContent(panes2.get(j-1));
+            } else if (b.getText().equals("Back")) {
+                for (int j = 0; j <= 4; j++) {
+                    Course.setContent(panes2.get(j - 1));
                 }
-            }else if (b.getText().equals("Next")) {
+            } else if (b.getText().equals("Next")) {
                 Course.setContent(panes2.get(1));
 
-            }else if (b.getText().equals("Last")) {
-                Course.setContent(panes2.get(panes2.size()-1));
+            } else if (b.getText().equals("Last")) {
+                Course.setContent(panes2.get(panes2.size() - 1));
             }
         };
 
@@ -154,7 +159,7 @@ public class Data_Project extends Application {
             pane2.addRow(5, courseBtns(Btc));
 
             panes2.add(pane2);
-            Course.setContent(pane2);
+            Course.setContent(panes2.get(0));
         }
 
         // Tab for the enrollment
@@ -164,15 +169,15 @@ public class Data_Project extends Application {
             Button b = (Button) e.getSource();
             if (b.getText().equals("First")) {
                 Enrollment.setContent(panes3.get(0));
-            } else if (b.getText().equals("Back")){
-                for(int j = 1; j <= panes3.size()-1; j++) {
-                    Enrollment.setContent(panes2.get(j-1));
+            } else if (b.getText().equals("Back")) {
+                for (int j = 1; j <= panes3.size() - 1; j++) {
+                    Enrollment.setContent(panes2.get(j - 1));
                 }
-            }else if (b.getText().equals("Next")) {
+            } else if (b.getText().equals("Next")) {
                 Enrollment.setContent(panes3.get(1));
 
-            }else if (b.getText().equals("Last")) {
-                Enrollment.setContent(panes3.get(panes3.size()-2));
+            } else if (b.getText().equals("Last")) {
+                Enrollment.setContent(panes3.get(panes3.size() - 2));
             }
         };
 
@@ -188,12 +193,13 @@ public class Data_Project extends Application {
 
             panes3.add(pane3);
 
-            Enrollment.setContent(pane3);
+            Enrollment.setContent(panes3.get(0));
         }
-        System.out.println(panes3.size());
 
         // Put all tabs together
-        tabPane.getTabs().addAll(Student, Course, Enrollment);
+        tabPane.getTabs().
+
+                addAll(Student, Course, Enrollment);
 
 
         Scene scene = new Scene(tabPane, 300, 200);
