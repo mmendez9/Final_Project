@@ -10,6 +10,7 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -20,55 +21,80 @@ import java.util.ArrayList;
 public class Data_Project extends Application {
 
     // Buttons for student tab
-    public HBox studentBtns(EventHandler eventHandler) {
+    public VBox studentBtns(EventHandler eventHandler) {
+        VBox all = new VBox();
         HBox buts = new HBox(10);
+        HBox bts = new HBox(10);
         Button first = new Button("First");
         Button back = new Button("Back");
         Button next = new Button("Next");
         Button last = new Button("Last");
+        Button add = new Button("Add");
+        Button modify = new Button("Modify");
+        Button del = new Button("Delete");
         first.setOnAction(eventHandler);
         back.setOnAction(eventHandler);
         next.setOnAction(eventHandler);
         last.setOnAction(eventHandler);
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
-
-        return buts;
+        bts.getChildren().addAll(add, modify, del);
+        bts.setAlignment(Pos.CENTER);
+        all.getChildren().addAll(buts,bts);
+        all.setAlignment(Pos.CENTER);
+        return all;
     }
 
     // Buttons for the course tab
-    public HBox courseBtns(EventHandler eventHandler) {
+    public VBox courseBtns(EventHandler eventHandler) {
+        VBox all = new VBox();
         HBox buts = new HBox(10);
+        HBox bts = new HBox(10);
         Button first = new Button("First");
         Button back = new Button("Back");
         Button next = new Button("Next");
         Button last = new Button("Last");
+        Button add = new Button("Add");
+        Button modify = new Button("Modify");
+        Button del = new Button("Delete");
         first.setOnAction(eventHandler);
         back.setOnAction(eventHandler);
         next.setOnAction(eventHandler);
         last.setOnAction(eventHandler);
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
-
-        return buts;
+        bts.getChildren().addAll(add, modify, del);
+        bts.setAlignment(Pos.CENTER);
+        all.getChildren().addAll(buts,bts);
+        all.setAlignment(Pos.CENTER);
+        return all;
     }
 
     // Buttons for the enrollment tab
-    public HBox enrollmentBtns(EventHandler eventHandler) {
+    public VBox enrollmentBtns(EventHandler eventHandler) {
+        VBox all = new VBox();
         HBox buts = new HBox(10);
+        HBox bts = new HBox(10);
         Button first = new Button("First");
         Button back = new Button("Back");
         Button next = new Button("Next");
         Button last = new Button("Last");
+        Button add = new Button("Add");
+        Button modify = new Button("Modify");
+        Button del = new Button("Delete");
+
         first.setOnAction(eventHandler);
         back.setOnAction(eventHandler);
         next.setOnAction(eventHandler);
         last.setOnAction(eventHandler);
-        buts.setPadding(new Insets(10));
+
         buts.setPadding(new Insets(10));
         buts.getChildren().addAll(first, back, next, last);
-
-        return buts;
+        bts.getChildren().addAll(add, modify, del);
+        bts.setAlignment(Pos.CENTER);
+        all.getChildren().addAll(buts,bts);
+        all.setAlignment(Pos.CENTER);
+        return all;
     }
 
     @Override
@@ -202,7 +228,7 @@ public class Data_Project extends Application {
                 addAll(Student, Course, Enrollment);
 
 
-        Scene scene = new Scene(tabPane, 300, 200);
+        Scene scene = new Scene(tabPane, 300, 250);
         primaryStage.setTitle("Registration DTCC");
         primaryStage.setScene(scene);
         primaryStage.show();
