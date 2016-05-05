@@ -111,30 +111,29 @@ public class Data_Project extends Application {
         ArrayList<Pane> panes = new ArrayList<>();
         EventHandler<ActionEvent> Bts = e -> {
             Button b = (Button) e.getSource();
-            if (b.getText().equals("First")) {
-                Student.setContent(panes.get(0));
-            } else if (b.getText().equals("Next")) {
-                int count = 0;
-                do {
-                    if (count > panes.size() && !(count < 0)) {
+            int count = 0;
+            while ((b.getText() == "First") || (b.getText() == "Back")
+                    || (b.getText() == "Next") || (b.getText() == "Last")) {
+                if (b.getText().equals("First")) {
+                    Student.setContent(panes.get(0));
+                } else if (b.getText().equals("Next")) {
+                    count += 1;
+                    if (count >= panes.size())
+                        Student.setContent(panes.get(panes.size() - 1));
+                    else
                         Student.setContent(panes.get(count));
-                        System.out.println(count);
-
-                    }count++;
-                }while (count < panes.size());
-            } else if (b.getText().equals("Back")) {
-                int count = 4;
-                if (count == 4){
+                } else if (b.getText().equals("Back")) {
                     count--;
-                    Student.setContent(panes.get(count));
-                    System.out.println(count);
-                } else if (count == 3) {
-                    count--;
-                    Student.setContent(panes.get(count));
+                    count = panes.size() - 1;
+                    count -= 1;
+                    if (count < 0)
+                        Student.setContent(panes.get(0));
+                    else
+                        Student.setContent(panes.get(count));
+                } else if (b.getText().equals("Last")) {
+                    Student.setContent((panes.get(panes.size() - 1)));
                 }
-                count--;
-            } else if (b.getText().equals("Last")) {
-                Student.setContent((panes.get(panes.size() - 1)));
+                count++;
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
