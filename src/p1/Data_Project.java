@@ -40,7 +40,7 @@ public class Data_Project extends Application {
         buts.getChildren().addAll(first, back, next, last);
         bts.getChildren().addAll(add, modify, del);
         bts.setAlignment(Pos.CENTER);
-        all.getChildren().addAll(buts,bts);
+        all.getChildren().addAll(buts, bts);
         all.setAlignment(Pos.CENTER);
         return all;
     }
@@ -65,7 +65,7 @@ public class Data_Project extends Application {
         buts.getChildren().addAll(first, back, next, last);
         bts.getChildren().addAll(add, modify, del);
         bts.setAlignment(Pos.CENTER);
-        all.getChildren().addAll(buts,bts);
+        all.getChildren().addAll(buts, bts);
         all.setAlignment(Pos.CENTER);
         return all;
     }
@@ -92,7 +92,7 @@ public class Data_Project extends Application {
         buts.getChildren().addAll(first, back, next, last);
         bts.getChildren().addAll(add, modify, del);
         bts.setAlignment(Pos.CENTER);
-        all.getChildren().addAll(buts,bts);
+        all.getChildren().addAll(buts, bts);
         all.setAlignment(Pos.CENTER);
         return all;
     }
@@ -111,25 +111,30 @@ public class Data_Project extends Application {
         ArrayList<Pane> panes = new ArrayList<>();
         EventHandler<ActionEvent> Bts = e -> {
             Button b = (Button) e.getSource();
-            for (int j = 0; j <= 4; j++) {
-                if (b.getText().equals("First")) {
-                    Student.setContent(panes.get(0));
-                } else if (b.getText().equals("Back")) {
-                    if (panes.get(j).equals(0)) {
-                        if (j != 0) {
-                            Student.setContent(panes.get(j));
-                        } else
-                            Student.setContent(panes.get(0));
-                    } else if (j != 0)
-                        Student.setContent(panes.get(j - 1));
+            if (b.getText().equals("First")) {
+                Student.setContent(panes.get(0));
+            } else if (b.getText().equals("Next")) {
+                int count = 0;
+                do {
+                    if (count > panes.size() && !(count < 0)) {
+                        Student.setContent(panes.get(count));
+                        System.out.println(count);
 
-                    System.out.println(j);
-                } else if (b.getText().equals("Next")) {
-                        Student.setContent(panes.get(j + 1));
-
-                } else if (b.getText().equals("Last")) {
-                    Student.setContent(panes.get(4));
+                    }count++;
+                }while (count < panes.size());
+            } else if (b.getText().equals("Back")) {
+                int count = 4;
+                if (count == 4){
+                    count--;
+                    Student.setContent(panes.get(count));
+                    System.out.println(count);
+                } else if (count == 3) {
+                    count--;
+                    Student.setContent(panes.get(count));
                 }
+                count--;
+            } else if (b.getText().equals("Last")) {
+                Student.setContent((panes.get(panes.size() - 1)));
             }
         };
         for (Student each : dataAccessor.getStudentsList()) {
